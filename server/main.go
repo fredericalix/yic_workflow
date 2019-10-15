@@ -9,14 +9,14 @@ import (
 	"log"
 	"net/http"
 	"sync"
+
 	"github.com/gofrs/uuid"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 
-
-	"github.com/fredericalix/yic_auth"
+	auth "github.com/fredericalix/yic_auth"
 	workflow "github.com/fredericalix/yic_workflow-engine"
 
 	_ "net/http/pprof"
@@ -66,6 +66,9 @@ func main() {
 
 	e := echo.New()
 	e.Use(middleware.Logger())
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Echo ping status OK\n")
+	})
 	e.GET("/workflow/running", h.getRunningWorkflow)
 	e.GET("/workflow/running/debug", h.getRunningWorkflowDebug)
 	e.GET("/workflow/running/debug/:id", h.getRunningWorkflowDebugDot)
