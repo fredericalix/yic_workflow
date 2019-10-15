@@ -12,9 +12,9 @@ import (
 	"strings"
 	"time"
 
+	workflow "github.com/fredericalix/yic_workflow-engine"
 	"github.com/gofrs/uuid"
 	"github.com/streadway/amqp"
-	workflow "github.com/fredericalix/yic_workflow-engine"
 )
 
 func randName(l int) []byte {
@@ -387,7 +387,7 @@ func (h *handler) handleAccountDeleted() {
 
 	err = ch.ExchangeDeclare(
 		"account", // name
-		"topic",   // type
+		"fanout",  // type
 		true,      // durable
 		false,     // auto-deleted
 		false,     // internal
